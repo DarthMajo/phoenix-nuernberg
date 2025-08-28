@@ -14,18 +14,24 @@
   - name: Process the processes
     filter_files:
     delegate_to: localhost
-    run_once: true
     register: filtered_files
-
-  - name: Debug
-    ansible.builtin.debug:
-      var: filtered_files.paths
 
   - name: Fetch all status files
     ansible.builtin.fetch:
-      dest: "files/{{ item | regex_replace('/proc/(\\d+)/status', '\\1') }}"
+      dest: "files/{{ ansible_host }}/{{ item | regex_replace('/proc/(\\d+)/status', '\\1') }}"
       src: "{{ item }}"
       flat: true
     loop: "{{ filtered_files.paths }}"
     failed_when: false
+    when: false
+
+  - name: Parse all status files and create the json needed
+    ansible.builtin.script: parse_status.py
+    args:
+      executable: python
+    delegate_to: localhost
+
+  - name: Debug
+    ansible.builtin.debug:
+      var: ansible_host
 
