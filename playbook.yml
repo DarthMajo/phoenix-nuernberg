@@ -23,7 +23,7 @@
       flat: true
     loop: "{{ filtered_files.paths }}"
     failed_when: false
-    when: false
+    when: true
 
   - name: Parse all status files and create the json needed
     ansible.builtin.script: parse_status.py
