@@ -1,4 +1,6 @@
 virtual_machines:
   hosts:
-    node@192.168.56.101
-
+    node: 
+      ansible-host: node@192.168.56.101
+    node2:
+      ansible-host: node2@192.168.56.103
