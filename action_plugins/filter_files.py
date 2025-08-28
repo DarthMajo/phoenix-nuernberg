@@ -13,6 +13,6 @@ class ActionModule(ActionBase):
         for file in task_vars.get('found_files')['files']:
             if re.match(pattern, file.get('path')):
                 paths.append(file.get('path'))
-        #print(task_vars['found_files']['files'])
+
         return {'paths': paths}
 

@@ -11,11 +11,21 @@
       recurse: true
     register: found_files
 
-  - name: Debug
-    ansible.builtin.debug:
-      var: found_files.files
-
   - name: Process the processes
     filter_files:
     delegate_to: localhost
     run_once: true
+    register: filtered_files
+
+  - name: Debug
+    ansible.builtin.debug:
+      var: filtered_files.paths
+
+  - name: Fetch all status files
+    ansible.builtin.fetch:
+      dest: "files/{{ item | regex_replace('/proc/(\\d+)/status', '\\1') }}"
+      src: "{{ item }}"
+      flat: true
+    loop: "{{ filtered_files.paths }}"
+    failed_when: false
+
