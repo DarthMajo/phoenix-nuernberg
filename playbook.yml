@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  become: false
+  tasks:
+  - name: Finding the processes on the node
+    ansible.builtin.find:
+      paths: /proc
+      file_type: file
+      patterns: status
+      recurse: true
+    register: found_files
+
+  - name: Debug
+    ansible.builtin.debug:
+      var: found_files.files
+
+  - name: Process the processes
+    filter_files:
+    delegate_to: localhost
+    run_once: true
