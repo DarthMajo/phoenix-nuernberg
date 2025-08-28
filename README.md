@@ -1,2 +1,2 @@
 # PHOENIX Nuremberg
-This is the repo for the showcase in Fuerth, 27.08.2025.
+This is the repo for the showcase in Fuerth, 29.08.2025.
