@@ -14,6 +14,8 @@ def main():
 
     # Go into the file directory and go through each node
     for node in files_dir:
+        if node == '.gitkeep':
+            continue
         procs = os.listdir('files/%s' % node)
         node_dict = {}
 
